@@ -3,6 +3,7 @@ package com.flav.emailSend.user.domain.services;
 import com.flav.emailSend.user.domain.dtos.request.CustomerEmailRequestDto;
 import com.flav.emailSend.user.domain.dtos.response.CustomerEmailByOwnerResponseDto;
 import com.flav.emailSend.user.domain.dtos.response.CustomerEmailResponseDto;
+import com.flav.emailSend.user.domain.exception.UserNotFount;
 import com.flav.emailSend.user.domain.mappers.CustomerEmailMapper;
 import com.flav.emailSend.user.persistence.entities.CustomerEmail;
 import com.flav.emailSend.user.persistence.entities.UserEntity;
@@ -43,13 +44,20 @@ public class CustomerEmailServices implements ICustomerEmailServices{
 
     @Override
     public CustomerEmailByOwnerResponseDto findAllCustomerEmailByOwner(String emailOwner) {
-        return null;
+        //find user
+        UserEntity owner = findUserByEmail(emailOwner);
+
+        //find customer email by owner
+        List<CustomerEmail> listCustomerEmails = this.customerEmailRepository.findAllByEmailOwnerId(emailOwner);
+
+        //from Entity to DTO and return
+        return this.customerEmailMapper.toAllCustomerEmailByOwner(owner, listCustomerEmails);
     }
 
     private UserEntity findUserByEmail(String emailUser) {
         Optional<UserEntity> user = this.userRepository.findByEmail(emailUser);
 
-        if(user.isEmpty()) throw new IllegalArgumentException("Error user not found");
+        if(user.isEmpty()) throw new UserNotFount();
 
         return user.get();
     }

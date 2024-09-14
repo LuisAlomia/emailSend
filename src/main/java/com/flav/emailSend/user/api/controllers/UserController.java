@@ -2,11 +2,11 @@ package com.flav.emailSend.user.api.controllers;
 
 import com.flav.emailSend.user.domain.dtos.request.CustomerEmailRequestDto;
 import com.flav.emailSend.user.domain.dtos.request.UserRequestDto;
+import com.flav.emailSend.user.domain.dtos.response.CustomerEmailByOwnerResponseDto;
 import com.flav.emailSend.user.domain.dtos.response.CustomerEmailResponseDto;
 import com.flav.emailSend.user.domain.dtos.response.UserResponseDto;
 import com.flav.emailSend.user.domain.services.ICustomerEmailServices;
 import com.flav.emailSend.user.domain.services.IUserServices;
-import com.flav.emailSend.user.persistence.entities.CustomerEmail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,5 +42,10 @@ public class UserController {
     @PostMapping("/customers/emails")
     public ResponseEntity<List<CustomerEmailResponseDto>> createCustomerEmail(@RequestBody CustomerEmailRequestDto customerEmails) {
         return ResponseEntity.status(201).body(this.customerEmailServices.createCustomerEmail(customerEmails));
+    }
+
+    @GetMapping("/{emailOwner}/customers/emails")
+    public ResponseEntity<CustomerEmailByOwnerResponseDto> findAllCustomerEmailByOwner(@PathVariable("emailOwner") String emailOwner) {
+        return ResponseEntity.status(200).body(this.customerEmailServices.findAllCustomerEmailByOwner(emailOwner));
     }
 }
