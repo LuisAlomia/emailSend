@@ -1,4 +1,4 @@
-package com.flav.emailSend.user.api.controllerExceptions;
+package com.flav.emailSend.communs;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -11,11 +11,9 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 public class ErrorResponse {
-
     private String code;
     private int statusCode;
     private HttpStatus status;
     private String message;
     private LocalDateTime timeStamp;
-
 }

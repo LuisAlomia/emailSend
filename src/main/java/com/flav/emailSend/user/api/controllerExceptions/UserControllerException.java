@@ -1,5 +1,6 @@
 package com.flav.emailSend.user.api.controllerExceptions;
 
+import com.flav.emailSend.communs.ErrorResponse;
 import com.flav.emailSend.user.domain.constans.UserErrorCatalog;
 import com.flav.emailSend.user.domain.exception.UserExist;
 import com.flav.emailSend.user.domain.exception.UserNotFount;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.time.LocalDateTime;
 
 @ControllerAdvice
-public class ControllerException {
+public class UserControllerException {
 
     @ExceptionHandler(UserNotFount.class)
     public ResponseEntity<ErrorResponse> handleError() {
